@@ -1,0 +1,11 @@
+{
+  "name": "qwize",
+  "version": "1.0.0",
+  "description": "Un quizz en ligne ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
