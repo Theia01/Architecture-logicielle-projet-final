@@ -1,0 +1,26 @@
+<html>
+
+    <form action="login" method="POST" >
+        <table style="margin: auto;border: solid orange 1px;padding: 10px;" >
+            <tr>
+                <td colspan="2" style="text-align: center">
+                    <b style="color : red"><%=locals.message %></b>
+                </td>
+            </tr>
+            <tr>
+                <td> <label>Login</label></td>
+                <td>  <input value="donahead@rotodyne.com" name="email" /></td>
+            </tr>
+            <tr>
+                <td><label>Mot de passe</label></td>
+                <td><input type="password" value="Password4968!@" name="password" /></td>
+            </tr>
+            <tr>
+                <td> <button  type="submit">Valider</button></td>
+                <td> <a href="/register">S'inscrire</a></td>
+            </tr>
+        </table>
+
+    </form>
+
+</html>
