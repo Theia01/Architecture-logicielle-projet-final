@@ -4,6 +4,9 @@ const loginController = require('./controllers/LoginController');
 const gameController = require('./controllers/GameController');
 const app = express();
 const port = 3000;
+global.MICROSERVICE_USER = 'http://localhost:3001';
+global.TOKEN_KEY = "vz5g405rnt4he-reh14h25te1grj56rzy4qhrde5tj56";
+
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
