@@ -11,8 +11,8 @@ const port = 3001;
 
 app.get("/login", async (req, res) => {
   try {
-    let user = loginService.login(req.body.email, req.body.password);
-    res.json(user);
+    let token = loginService.login(req.body.email, req.body.password);
+    res.json(token);
   } catch (err) {
     console.error(err);
   }
@@ -26,6 +26,10 @@ app.post("/questions", async (req, res) => {
   } else {
     res.send("Not implemented");
   }
+});
+
+app.get("/validate", async function (req, res) {
+  loginController.validate(req, res);
 });
 
 // Lancement du service

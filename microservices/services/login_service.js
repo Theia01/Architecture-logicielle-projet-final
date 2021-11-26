@@ -16,11 +16,21 @@ module.exports = {
       });
 
       return {
-        ...user,
+        //...user,
         token,
       };
     } else {
-      throw new UnknownUserError();
+      throw new Error();
+    }
+  },
+
+  validate: (token) => {
+    const decode = jwt.decode(token, TOKEN_KEY);
+    const user = userDAO.findUserByEmail(user.email);
+    if (user) {
+      return true;
+    } else {
+      throw new Error();
     }
   },
 
