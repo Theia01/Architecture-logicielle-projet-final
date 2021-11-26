@@ -4,7 +4,6 @@ const loginController = require('./controllers/LoginController');
 const gameController = require('./controllers/GameController');
 const app = express();
 const port = 3000;
-global.FAKE_DB = require('./fakedb')
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
