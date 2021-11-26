@@ -14,17 +14,7 @@ app.get("/login", async (req, res) => {
     let token = loginService.login(req.body.email, req.body.password);
     res.json(token);
   } catch (err) {
-    console.error(err);
-  }
-});
-
-app.post("/questions", async (req, res) => {
-  // Récuperer les headers
-
-  if (loginController.create) {
-    loginController.create(req, res);
-  } else {
-    res.send("Not implemented");
+    res.error(401);
   }
 });
 

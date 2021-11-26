@@ -1,4 +1,4 @@
-const userDAO = require("./../dao/login_dao");
+const userDAO = require("../dao/login_dao");
 const jwt = require("jsonwebtoken");
 
 const TOKEN_KEY = "vz5g405rnt4he-reh14h25te1grj56rzy4qhrde5tj56";

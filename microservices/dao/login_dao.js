@@ -1,4 +1,4 @@
-const FAKE_DB = require("./../../fake_user_db");
+const FAKE_DB = require("../../fake_user_db");
 
 module.exports = {
   findUserByEmail: (email) => {

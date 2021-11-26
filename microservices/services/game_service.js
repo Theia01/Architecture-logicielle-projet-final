@@ -1,4 +1,4 @@
-const gameDAO = require("./../dao/game_dao");
+const gameDAO = require("../dao/game_dao");
 
 module.exports = {
   list: () => {
