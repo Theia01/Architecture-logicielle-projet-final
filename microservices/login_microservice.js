@@ -19,7 +19,7 @@ app.get("/login", async (req, res) => {
 });
 
 app.get("/validate", async function (req, res) {
-  loginController.validate(req, res);
+  res.send(loginService.validate(req, res));
 });
 
 // Lancement du service
