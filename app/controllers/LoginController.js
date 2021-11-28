@@ -6,11 +6,11 @@ module.exports = {
         res.render('login.ejs');
     },
 
-    login : (req, res) => {
-        let user = loginService.login(req.body.email , req.body.password);
-        if (!user) {
-            res.render('login.ejs', {message: 'Utilisateur inconnu'});
-        }else {
+    login : async (req, res) => {
+        let user = await loginService.login(req.body.email , req.body.password);
+        if(user.error){
+            res.render('login.ejs', {message: user.error});
+        }else{
             res.redirect('/game');
         }
     },

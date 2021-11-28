@@ -14,7 +14,7 @@ app.get("/login", async (req, res) => {
     let token = loginService.login(req.body.email, req.body.password);
     res.json(token);
   } catch (err) {
-    res.error(401);
+    res.sendStatus(401);
   }
 });
 
