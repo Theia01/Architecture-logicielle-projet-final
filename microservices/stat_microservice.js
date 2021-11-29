@@ -5,25 +5,34 @@ const express = require("express");
 const axios = require("axios");
 const bodyparser = require("body-parser");
 const crypto = require("crypto");
-const gameService = require("./services/game_service");
+const statController = require("./services/stat_service");
 const app = express();
 app.use(bodyparser.json());
 const port = 3002;
 
-app.get("/questions", async (req, res) => {
+app.get("/stat", async (req, res) => {
   try {
     var pageUrl = url.parse(req.url, true).query;
-    res.json(gameService.list());
+    res.json(statController.list());
   } catch (err) {
     console.error(err);
   }
 });
 
-app.post("/questions", async (req, res) => {
+app.get("/games", async (req, res) => {
+  try {
+    var pageUrl = url.parse(req.url, true).query;
+    res.json(statController.list());
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+app.post("/game", async (req, res) => {
   // Récuperer les headers
 
-  if (gameController.create) {
-    gameController.create(req, res);
+  if (statController.create) {
+    statController.create(req, res);
   } else {
     res.send("Not implemented");
   }

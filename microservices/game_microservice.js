@@ -40,7 +40,6 @@ app.post("/questions", async (req, res) => {
 // Lancement du service
 app.listen(port, () => {
   console.log(`Service listening at http://localhost:${port}`);
-  //start();
 });
 
 async function validate(token) {
