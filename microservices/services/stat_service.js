@@ -1,34 +1,35 @@
-const gameDAO = require("../dao/game_dao");
+const statDAO = require("../dao/stat_dao");
 
 module.exports = {
-  list: () => {
-    return gameDAO.list();
+  //récupère le % de bonnes réponses totales
+  userStats: (req, res) => {
+    return statDAO.userStats(req.body.userId);
   },
 
-  listWithParameters: (req, res) => {
-    const theme = req.body.theme;
-    const difficulty = req.body.difficulty;
-    const nbQuestion = req.body.number;
-    return gameDAO.listWithParameters(theme, difficulty, nbQuestion);
+  userGames: (req, res) => {
+    return statDAO.userGames(req.userId);
   },
 
-  create: (obj) => {
-    const isQuestionValid =
-      typeof obj["question"] === "string" &&
-      data["question"].length > 5 &&
-      data["quesion"].length < 200;
+  createGame: (obj) => {
+    // const isQuestionValid =
+    //   typeof obj["question"] === "string" &&
+    //   data["question"].length > 5 &&
+    //   data["quesion"].length < 200;
 
-    //si au moins une réponse
-    const isResponseValid =
-      typeof obj["response"] === "array" && obj["response"].length > 0;
+    // //si au moins une réponse
+    // const isResponseValid =
+    //   typeof obj["response"] === "array" && obj["response"].length > 0;
 
-    const isDifficultyValid =
-      typeof data["difficulty"] === "int" &&
-      data["difficulty"] > 0 &&
-      data["difficulty"] <= 3;
+    // const isDifficultyValid =
+    //   typeof data["difficulty"] === "int" &&
+    //   data["difficulty"] > 0 &&
+    //   data["difficulty"] <= 3;
 
-    if (isQuestionValid && isResponseValid && isDifficultyValid) {
-      return gameDAO.create(obj);
+    const isScoreValid =
+      typeof obj.score === "number" && obj.score <= obj.numberOfQuestions;
+    const isNumberOfQuestionValid = typeof obj.numberOfQuestions === "number";
+    if (isScoreValid && isNumberOfQuestionValid) {
+      return statDAO.create(obj);
     } else {
       throw new Error("BAD PARAMETERS YOU SUCKS");
     }

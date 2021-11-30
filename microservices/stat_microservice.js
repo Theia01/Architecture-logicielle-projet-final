@@ -5,38 +5,73 @@ const express = require("express");
 const axios = require("axios");
 const bodyparser = require("body-parser");
 const crypto = require("crypto");
-const statController = require("./services/stat_service");
+const statService = require("./services/stat_service");
 const app = express();
 app.use(bodyparser.json());
 const port = 3002;
 
 app.get("/stat", async (req, res) => {
-  try {
-    var pageUrl = url.parse(req.url, true).query;
-    res.json(statController.list());
-  } catch (err) {
-    console.error(err);
+  if (validate(res.body.token)) {
+    try {
+      var pageUrl = url.parse(req.url, true).query;
+      res.json(statService.userStats(req, res));
+    } catch (err) {
+      console.error(err);
+    }
+  } else {
+    res.sendStatus(401); //unauthorized
   }
 });
 
 app.get("/games", async (req, res) => {
-  try {
-    var pageUrl = url.parse(req.url, true).query;
-    res.json(statController.list());
-  } catch (err) {
-    console.error(err);
+  if (validate(res.body.token)) {
+    try {
+      res.json(statService.userGames(req, res));
+    } catch (err) {
+      console.error(err);
+    }
+  } else {
+    res.sendStatus(401); //unauthorized
   }
 });
+
+// app.get("/games", async (req, res) => {
+//   try {
+//     var pageUrl = url.parse(req.url, true).query;
+//     res.json(statService.list());
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
 
 app.post("/game", async (req, res) => {
   // Récuperer les headers
 
-  if (statController.create) {
-    statController.create(req, res);
+  if (statService.create) {
+    statService.createGame(req, res);
   } else {
     res.send("Not implemented");
   }
 });
+
+async function validate(token) {
+  let response;
+  try {
+    response = await axios.post(loginMicroservice + "/validate", {
+      token: token,
+    });
+  } catch (e) {
+    if (e.response.status == 403) {
+      res.sendStatus(403);
+      console.log(403);
+    } else {
+      res.sendStatus(500);
+      console.log(500);
+    }
+    console.log(response);
+    return response;
+  }
+}
 
 // Lancement du service
 app.listen(port, () => {
