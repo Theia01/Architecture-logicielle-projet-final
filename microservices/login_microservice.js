@@ -18,6 +18,23 @@ app.get("/login", async (req, res) => {
   }
 });
 
+app.get("/register", async (req, res) => {
+  try {
+    //create user
+    let newUser = await loginService.register(req.body);
+    if(newUser){
+      res.sendStatus(newUser.error);
+    }else{
+      //connect user
+      let token = loginService.login(req.body.email, req.body.password);
+      res.json(token);
+    }
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
 app.get("/validate", async function (req, res) {
   res.send(loginService.validate(req, res));
 });

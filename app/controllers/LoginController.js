@@ -11,6 +11,7 @@ module.exports = {
         if(user.error){
             res.render('login.ejs', {message: user.error});
         }else{
+            //user.token
             res.redirect('/game');
         }
     },
@@ -19,15 +20,14 @@ module.exports = {
         res.render('register');
     },
 
-    register : (req, res) => {
-        try {
-            loginService.register(req.body);
+    register : async (req, res) => {
+        let user = await loginService.register(req.body);
+        if(user.error){
+            res.render('register.ejs', {message: user.error});
+        }else{
+            //user.token
             res.redirect('/game');
-        }catch(e){
-            res.render('register' , {message : e.message});
         }
     },
-
-
 
 }

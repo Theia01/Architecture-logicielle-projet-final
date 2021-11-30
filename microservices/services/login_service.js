@@ -6,7 +6,7 @@ const TOKEN_KEY = "vz5g405rnt4he-reh14h25te1grj56rzy4qhrde5tj56";
 module.exports = {
   login: (email, password) => {
     if (!email || !password) {
-      throw new Error("all inputs are required");
+      throw new Error("All inputs are required");
     }
 
     const user = userDAO.findUserByEmail(email);
@@ -35,11 +35,20 @@ module.exports = {
   },
 
   register: (user) => {
-    if (!user.email) {
-      throw new Error("Données invalides");
+    if (!user.email || !user.password || !user.pseudo) {
+      console.log("Microservice LOGIN : All inputs are required");
+      return {error : 400};
     }
-    user.registered = new Date().toISOString();
-    user.isActive = true;
-    return userDAO.create(user);
+
+    //verifie si l'utilisateur n'existe pas déjà en BDD
+    let checkUser = userDAO.findUserByEmail(user.email);
+    if (checkUser) {
+      console.log("Microservice LOGIN : User already exist");
+      return {error : 409};
+    } else {
+      user.registered = new Date().toISOString();
+      user.isActive = true;
+      userDAO.create(user);
+    }
   },
 };

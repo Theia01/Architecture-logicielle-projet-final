@@ -7,7 +7,7 @@ const crypto = require("crypto");
 const gameService = require("./services/game_service");
 const app = express();
 app.use(bodyparser.json());
-const port = 3000;
+const port = 3002;
 
 const loginMicroservice = "http://localhost:3001";
 
