@@ -36,11 +36,15 @@ app.get("/games", async (req, res) => {
 
 app.post("/games", async (req, res) => {
   // Récuperer les headers
-
-  if (statService.create) {
-    statService.createGame(req, res);
+  const validation = await validate(req.body.token);
+  if (typeof validation !== "number") {
+    try {
+      statService.createGame(req, res, validation.data.id);
+    } catch (err) {
+      console.error(err);
+    }
   } else {
-    res.send("Not implemented");
+    res.sendStatus(401); //unauthorized
   }
 });
 

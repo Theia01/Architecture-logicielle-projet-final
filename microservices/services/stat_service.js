@@ -10,7 +10,8 @@ module.exports = {
     return statDAO.userGames(id);
   },
 
-  createGame: (obj) => {
+  createGame: (res, req, id) => {
+    const obj = req.body.game;
     // const isQuestionValid =
     //   typeof obj["question"] === "string" &&
     //   data["question"].length > 5 &&
@@ -29,7 +30,7 @@ module.exports = {
       typeof obj.score === "number" && obj.score <= obj.numberOfQuestions;
     const isNumberOfQuestionValid = typeof obj.numberOfQuestions === "number";
     if (isScoreValid && isNumberOfQuestionValid) {
-      return statDAO.create(obj);
+      return statDAO.create(obj, id);
     } else {
       throw new Error("BAD PARAMETERS YOU SUCKS");
     }

@@ -48,9 +48,16 @@ module.exports = {
     statsUser.gamesId.push(obj.id);
   },
 
-  create: (obj) => {
+  create: (obj, id) => {
     obj.gameId = "" + new Date().getUTCMilliseconds();
     FAKE_DB.games.push(obj);
+    //Ajout de l'obj dans la liste des games
+
+    let userStats = FAKE_DB.stats.find((stats) => {
+      return id == stats.userId;
+    });
+    //Ajout de l'obj dans la liste des parties de l'utilisateur
+    userStats.gamesId.push(obj.gameId);
     return obj;
   },
 };
