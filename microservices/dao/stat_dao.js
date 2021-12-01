@@ -49,7 +49,7 @@ module.exports = {
   },
 
   create: (obj) => {
-    obj.id = "" + new Date().getUTCMilliseconds();
+    obj.gameId = "" + new Date().getUTCMilliseconds();
     FAKE_DB.games.push(obj);
     return obj;
   },
