@@ -1,5 +1,6 @@
 const userDAO = require("../dao/login_dao");
 const jwt = require("jsonwebtoken");
+const { json } = require("express");
 
 const TOKEN_KEY = "vz5g405rnt4he-reh14h25te1grj56rzy4qhrde5tj56";
 
@@ -28,16 +29,24 @@ module.exports = {
     let token = req.body.token;
     if (token !== null) {
       const decode = jwt.decode(token, TOKEN_KEY);
-      const user = userDAO.findUserByEmail(decode.email);
-      if (user) {
-        return true;
+      if (decode) {
+        const user = userDAO.findUserByEmail(decode.email);
+        if (user) {
+          return res.send(true);
+        } else {
+          throw new Error();
+        }
       } else {
-        throw new Error();
+        res.sendStatus(401);
       }
     } else {
       //pas de token
       res.sendStatus(401);
     }
+  },
+
+  getUserId: (req, res) => {
+    let token = req.body.token;
   },
 
   register: (user) => {

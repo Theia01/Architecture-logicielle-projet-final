@@ -4,7 +4,6 @@ const express = require("express");
 
 const axios = require("axios");
 const bodyparser = require("body-parser");
-const crypto = require("crypto");
 const statService = require("./services/stat_service");
 const app = express();
 app.use(bodyparser.json());

@@ -12,7 +12,8 @@ const port = 3002;
 const loginMicroservice = "http://localhost:3001";
 
 app.get("/questions", async (req, res) => {
-  if (validate(req.body.token)) {
+  let validation = validate(req.body.token);
+  if (typeof validation !== "number") {
     try {
       if (req.body !== "") {
         console.log(
@@ -27,7 +28,7 @@ app.get("/questions", async (req, res) => {
       console.error(err);
     }
   } else {
-    res.sendStatus(401); //unauthorized
+    res.sendStatus(validation); //unauthorized
   }
 });
 
@@ -51,11 +52,9 @@ async function validate(token) {
     console.log(response);
   } catch (e) {
     if (e.response.status == 403) {
-      res.sendStatus(403);
-      console.log(403);
+      response = 403;
     } else {
-      res.sendStatus(500);
-      console.log(500);
+      response = 500;
     }
     console.log(response);
     return response;
