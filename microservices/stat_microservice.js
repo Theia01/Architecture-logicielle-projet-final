@@ -62,27 +62,6 @@ async function validate(token) {
     } else {
       response = 500;
     }
-    console.log("response of validate function : ", response);
-    return response;
-  }
-}
-
-async function getId(token) {
-  let response;
-  try {
-    response = await axios.get(loginMicroservice + "/userId", {
-      data: {
-        token: token,
-      },
-    });
-  } catch (e) {
-    if (e.response.status === 403) {
-      response = 403;
-    } else if (e.response.status === 401) {
-      response = 401;
-    } else {
-      response = 500;
-    }
     return response;
   }
 }
