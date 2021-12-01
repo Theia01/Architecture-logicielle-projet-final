@@ -1,1 +1,55 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('./links'); %>
+  <title>Game</title>
+</head>
+<body>
+    <%- include('./navbar'); %>
+    <div class="container">
+        <div class="mt-4 row justify-content-center">
+          <div class="col mb-2">
+            <h1 class="text-center">Prêt pour vous tester ?</h1>
+          </div>
+        </div>
+        <form action="game" method="POST">
+          <div class="row justify-content-center">
+            <div class="">
+              <button type="submit" class="btn btn-primary btn-lg mt-2">Débuter le quizz</button>
+            </div>
+            <div class="form-group">
+              <span style="color : #dc3545;" class="form-text"><%=locals.message %></span>
+          </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-sm-7">
+              <p class="form-text mt-5">Vous pouvez rajouter des options :</p>
+              <div class="form-group">
+                <label for="selectTheme">Thème</label>
+                <select class="form-control" id="selectTheme">
+                  <option selected>Choisir un thème</option>
+                    <% for(var i=0; i < theme.length; i++) { %>
+                    <option style="text-transform: capitalize;" value="<%= theme[i] %>"><%= theme[i] %></option>
+                    <% } %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="selectTheme">Difficulté</label>
+                <select class="form-control" id="selectTheme">
+                  <option selected>Choisir une difficulté</option>
+                    <% for(var i=0; i < difficulty.length; i++) { %>
+                    <option style="text-transform: capitalize;" value="<%= difficulty[i] %>"><%= difficulty[i] %></option>
+                    <% } %>
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+</body>
+</html>
+

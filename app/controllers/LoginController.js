@@ -11,7 +11,7 @@ module.exports = {
         if(user.error){
             res.render('login.ejs', {message: user.error});
         }else{
-            //user.token
+            res.cookie('token', user.token, {expire: 360000 + Date.now()})
             res.redirect('/game');
         }
     },
@@ -25,7 +25,7 @@ module.exports = {
         if(user.error){
             res.render('register.ejs', {message: user.error});
         }else{
-            //user.token
+            res.cookie('token', user.token, {expire: 360000 + Date.now()})
             res.redirect('/game');
         }
     },

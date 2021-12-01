@@ -33,7 +33,6 @@ app.get("/questions", async (req, res) => {
 
 app.post("/questions", async (req, res) => {
   // Récuperer les headers
-
   if (gameController.create) {
     gameController.create(req, res);
   } else {
