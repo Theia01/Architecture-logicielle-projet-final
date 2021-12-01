@@ -24,7 +24,7 @@ module.exports = {
         let token = req.cookies.token;
 
         let addStat = await statService.addStat(token, req.body.numberOfQuestions, req.body.score);
-        redirect("dashboard");
+        res.redirect("dashboard");
 
     },
 }
