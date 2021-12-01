@@ -10,7 +10,7 @@ module.exports = {
     let totalOfScore = 0;
     let total = 0;
     //calcule le % de bonnes réponses par rapport au total des questions
-    if (userStats.gamesId.length) {
+    if (userStats.gamesId.length > 0) {
       userStats.gamesId.forEach((element) => {
         const game = FAKE_DB.games.find((games) => {
           return element === games.gameId;
@@ -29,13 +29,15 @@ module.exports = {
     });
     let games = [];
     //récupère toutes les partiesqu'un utilisateur a faites
-    userStats.gamesId.forEach((element) => {
-      games.push(
-        FAKE_DB.games.find((games) => {
-          return element === games.gameId;
-        })
-      );
-    });
+    if (userStats.gamesId.length > 0) {
+      userStats.gamesId.forEach((element) => {
+        games.push(
+          FAKE_DB.games.find((games) => {
+            return element === games.gameId;
+          })
+        );
+      });
+    }
     return games;
   },
 
