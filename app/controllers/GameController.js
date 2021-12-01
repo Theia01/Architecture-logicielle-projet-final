@@ -52,7 +52,6 @@ module.exports = {
                     [randomArray[i], randomArray[j]] = [randomArray[j], randomArray[i]];
                 }
             });
-            console.log(questions);
             res.render('quiz.ejs', {quest : questions});
         }
 
