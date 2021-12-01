@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('./links'); %>
+  <title>Quiz</title>
+</head>
+<body>
+    <%- include('./navbar'); %>
+    <div class="container">
+        <div class="mt-4 row justify-content-center">
+          <div class="col mb-2">
+            <h1 class="text-center">Quiz</h1>
+          </div>
+        </div>
+        <div id="quest-0">
+            <div class="row mt-4 justify-content-center">
+                <div class="">
+                    <h5>
+                        <%= quest[0].question %>
+                    </h5>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <% for(var y=0; y < quest[0]["incorrect_answers"].length; y++) { %>
+                    <div id='0-<%= [y] %>' class="col-sm-4 btn btn-lg btn-outline-primary m-2 button-quest choice-0"><%= quest[0]["incorrect_answers"][y] %></div>
+                <% } %>
+            <input id="answer-0" type="hidden" value="<%= quest[0]['correct_answer'] %>">
+            </div>
+        </div>
+        <% for(var i=1; i < quest.length; i++) { %>
+        <div id="quest-<%= [i] %>" class="d-none">
+            <div class="row justify-content-center">
+                <div class="">
+                    <h5>
+                        <%= quest[i].question %>
+                    </h5>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <% for(var y=0; y < quest[i]["incorrect_answers"].length; y++) { %>
+                    <div id='<%= [i] %>-<%= [y] %>' class="col-sm-4 btn btn-lg btn-outline-primary m-2 button-quest choice-<%= [i] %>"><%= quest[i]["incorrect_answers"][y] %></div>
+                <% } %>
+            </div>
+        </div>
+        <input id="answer-<%= [i] %>" type="hidden" value="<%= quest[i]['correct_answer'] %>">
+        <% } %>
+        <div class="row justify-content-center">
+            <div id="next" class="btn btn-primary btn-lg mt-2 d-none">Suivant</div>
+        </div>
+    </div>
+    <form id="finishQuiz" action="dashboard" method="POST">
+        <input type="hidden" id="finishNumberOfQuestions" name="numberOfQuestions" value="">
+        <input type="hidden" id="finishScore" name="score" value="">
+    </form>
+
+</body>
+</html>
+
+<script>
+    let nbQuest = '<%= quest.length %>';
+    let countQuest = 0;
+    let countPoint = 0;
+    let choice = document.getElementsByClassName("button-quest");
+    let buttonNext = document.getElementById('next');
+
+    let getChoice = function() {
+
+        let questNumberActual = this.getAttribute('id').split("-")[0];    
+
+        //check if the quest have change
+        if(questNumberActual == countQuest){
+            let choiceUser = this.textContent;
+            let answer = document.getElementById('answer-'+questNumberActual).value;
+            let choices = document.getElementsByClassName('choice-'+questNumberActual);
+
+            //show result user
+            if(answer == choiceUser){
+                this.classList.remove("btn-outline-primary");
+                this.classList.add("btn-success");
+                countPoint++;
+            }else{
+                this.classList.remove("btn-outline-primary");
+                this.classList.add("btn-danger");
+                for (let i = 0; i < choices.length; i++) {
+                    if(choices[i].textContent == answer){
+                        choices[i].classList.remove("btn-outline-primary");
+                        choices[i].classList.add("btn-success");
+                    }
+                }
+            }
+
+            countQuest++;
+        }
+
+        buttonNext.classList.remove("d-none");
+    };
+
+    for (let i = 0; i < choice.length; i++) {
+        choice[i].addEventListener('click', getChoice, false);
+    }
+
+    buttonNext.addEventListener('click', ()=>{
+        buttonNext.classList.add("d-none");
+        document.getElementById("quest-"+(countQuest-1)).classList.add("d-none")
+
+        //check if last quest
+        if(nbQuest == (countQuest+1)){
+            document.getElementById("finishNumberOfQuestions").value = nbQuest;
+            document.getElementById("finishScore").value = countPoint;
+            document.getElementById("finishQuiz").submit();
+            console.log("submit");
+        }else{
+            document.getElementById("quest-"+(countQuest)).classList.remove("d-none")
+        }
+    });
+
+</script>
+

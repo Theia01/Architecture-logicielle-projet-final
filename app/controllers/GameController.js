@@ -43,6 +43,16 @@ module.exports = {
                 res.render('game.ejs', {theme: themes, difficulty : difficulties, message: questions.error});
             }
         }else{
+            //random answer
+            questions.forEach(question => {
+                let randomArray = question.incorrect_answers;
+                randomArray.push(question.correct_answer);
+                for (let i = randomArray.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [randomArray[i], randomArray[j]] = [randomArray[j], randomArray[i]];
+                }
+            });
+            console.log(questions);
             res.render('quiz.ejs', {quest : questions});
         }
 

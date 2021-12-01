@@ -53,7 +53,6 @@ module.exports = {
         }catch(e){
             return false;
         }
-        console.log(typeof response);
         return response;
     }
 
