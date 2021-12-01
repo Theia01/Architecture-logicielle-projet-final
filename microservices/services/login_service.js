@@ -34,7 +34,7 @@ module.exports = {
         if (user) {
           return res.send(true);
         } else {
-          throw new Error();
+          res.sendStatus(401);
         }
       } else {
         res.sendStatus(401);
@@ -47,6 +47,22 @@ module.exports = {
 
   getUserId: (req, res) => {
     let token = req.body.token;
+    if (token !== null) {
+      const decode = jwt.decode(token, TOKEN_KEY);
+      if (decode) {
+        const user = userDAO.findUserByEmail(decode.email);
+        if (user) {
+          return res.send(true);
+        } else {
+          res.sendStatus(401);
+        }
+      } else {
+        res.sendStatus(401);
+      }
+    } else {
+      //pas de token
+      res.sendStatus(401);
+    }
   },
 
   register: (user) => {
