@@ -2,8 +2,8 @@ const statDAO = require("../dao/stat_dao");
 
 module.exports = {
   //récupère le % de bonnes réponses totales
-  userStats: (req, res) => {
-    return statDAO.userStats(req.body.userId);
+  userStats: (id, res) => {
+    return statDAO.userStats(id);
   },
 
   userGames: (req, res) => {

@@ -50,12 +50,7 @@ module.exports = {
     if (token !== null) {
       const decode = jwt.decode(token, TOKEN_KEY);
       if (decode) {
-        const user = userDAO.findUserByEmail(decode.email);
-        if (user) {
-          return res.send(true);
-        } else {
-          res.sendStatus(401);
-        }
+        return res.send(decode.id);
       } else {
         res.sendStatus(401);
       }

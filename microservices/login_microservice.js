@@ -39,6 +39,10 @@ app.get("/validate", async function (req, res) {
   res.send(loginService.validate(req, res));
 });
 
+app.get("/userId", async function (req, res) {
+  res.send(loginService.getUserId(req, res));
+});
+
 // Lancement du service
 app.listen(port, () => {
   console.log(`Service listening at http://localhost:${port}`);

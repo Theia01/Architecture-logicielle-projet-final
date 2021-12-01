@@ -10,10 +10,11 @@ app.use(bodyparser.json());
 const port = 3003;
 
 app.get("/stat", async (req, res) => {
-  if (validate(req.body.token)) {
+  let validation = await validate(req.body.token);
+  if (typeof validation !== "number") {
     try {
-      var pageUrl = url.parse(req.url, true).query;
-      res.json(statService.userStats(req, res));
+      const id = await getId(req.body.token);
+      res.json(statService.userStats(id, res));
     } catch (err) {
       console.error(err);
     }
@@ -74,6 +75,29 @@ async function validate(token) {
     return response;
   }
 }
+
+async function getId(token) {
+  let response;
+  try {
+    response = await axios.get(loginMicroservice + "/getId", {
+      data: {
+        token: token,
+      },
+    });
+    console.log(response);
+  } catch (e) {
+    if (e.response.status == 403) {
+      res.sendStatus(403);
+      console.log(403);
+    } else {
+      res.sendStatus(500);
+      console.log(500);
+    }
+    console.log(response);
+    return response;
+  }
+}
+
 // Lancement du service
 app.listen(port, () => {
   console.log(`Service listening at http://localhost:${port}`);
