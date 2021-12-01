@@ -31,13 +31,8 @@ app.get("/questions", async (req, res) => {
   }
 });
 
-app.post("/questions", async (req, res) => {
-  // Récuperer les headers
-  if (gameController.create) {
-    gameController.create(req, res);
-  } else {
-    res.send("Not implemented");
-  }
+app.get("/categories", async (req, res) => {
+  res.json(await gameService.getCategories(req, res));
 });
 
 // Lancement du service

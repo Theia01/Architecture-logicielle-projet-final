@@ -3,6 +3,7 @@ const OPEN_API = "https://opentdb.com/api.php";
 const url = require("url");
 const https = require("https");
 const axios = require("axios");
+const { response } = require("express");
 
 module.exports = {
   list: () => {
@@ -25,6 +26,19 @@ module.exports = {
     }
   },
 
+  getCategories: async (req, res) => {
+    const url = "https://opentdb.com/api_category.php";
+    let response;
+    try {
+      response = await axios.get(url);
+      console.log(response);
+      return response.data.trivia_categories;
+    } catch (e) {
+      res.sendStatus(421);
+      //Bad mapping
+    }
+  },
+
   getQuestions: async (theme, difficulty, number) => {
     const url =
       "https://opentdb.com/api.php?amount=" +
@@ -44,11 +58,5 @@ module.exports = {
       res.sendStatus(421);
       //Bad mapping
     }
-  },
-
-  create: (obj) => {
-    obj.id = "" + new Date().getUTCMilliseconds();
-    FAKE_DB.products.push(obj);
-    return obj;
   },
 };

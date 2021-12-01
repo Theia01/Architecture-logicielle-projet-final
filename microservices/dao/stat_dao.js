@@ -7,7 +7,7 @@ module.exports = {
     let totalOfQuestions;
     let totalOfScore;
 
-    //calcule le % de bonnes questions par rapport au total des questions
+    //calcule le % de bonnes réponses par rapport au total des questions
     stats.gamesId.forEach((element) => {
       const game = this.getGameFromId(element);
       totalOfQuestions += game.numberOfQuestions;
@@ -40,7 +40,7 @@ module.exports = {
 
   create: (obj) => {
     obj.id = "" + new Date().getUTCMilliseconds();
-    //FAKE_DB.products.push(obj);
+    FAKE_DB.games.push(obj);
     return obj;
   },
 };

@@ -8,10 +8,10 @@ const crypto = require("crypto");
 const statService = require("./services/stat_service");
 const app = express();
 app.use(bodyparser.json());
-const port = 3002;
+const port = 3003;
 
 app.get("/stat", async (req, res) => {
-  if (validate(res.body.token)) {
+  if (validate(req.body.token)) {
     try {
       var pageUrl = url.parse(req.url, true).query;
       res.json(statService.userStats(req, res));
@@ -24,7 +24,7 @@ app.get("/stat", async (req, res) => {
 });
 
 app.get("/games", async (req, res) => {
-  if (validate(res.body.token)) {
+  if (validate(req.body.token)) {
     try {
       res.json(statService.userGames(req, res));
     } catch (err) {
@@ -57,9 +57,12 @@ app.post("/games", async (req, res) => {
 async function validate(token) {
   let response;
   try {
-    response = await axios.post(loginMicroservice + "/validate", {
-      token: token,
+    response = await axios.get(loginMicroservice + "/validate", {
+      data: {
+        token: token,
+      },
     });
+    console.log(response);
   } catch (e) {
     if (e.response.status == 403) {
       res.sendStatus(403);
@@ -72,7 +75,6 @@ async function validate(token) {
     return response;
   }
 }
-
 // Lancement du service
 app.listen(port, () => {
   console.log(`Service listening at http://localhost:${port}`);

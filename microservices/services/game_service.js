@@ -12,25 +12,7 @@ module.exports = {
     return await gameDAO.getQuestions(theme, difficulty, nbQuestion);
   },
 
-  create: (obj) => {
-    const isQuestionValid =
-      typeof obj["question"] === "string" &&
-      data["question"].length > 5 &&
-      data["quesion"].length < 200;
-
-    //si au moins une réponse
-    const isResponseValid =
-      typeof obj["response"] === "array" && obj["response"].length > 0;
-
-    const isDifficultyValid =
-      typeof data["difficulty"] === "int" &&
-      data["difficulty"] > 0 &&
-      data["difficulty"] <= 3;
-
-    if (isQuestionValid && isResponseValid && isDifficultyValid) {
-      return gameDAO.create(obj);
-    } else {
-      throw new Error("BAD PARAMETERS YOU SUCKS");
-    }
+  getCategories: async (req, res) => {
+    return await gameDAO.getCategories(req, res);
   },
 };

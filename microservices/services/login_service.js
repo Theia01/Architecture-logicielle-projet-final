@@ -26,12 +26,17 @@ module.exports = {
 
   validate: (req, res) => {
     let token = req.body.token;
-    const decode = jwt.decode(token, TOKEN_KEY);
-    const user = userDAO.findUserByEmail(decode.email);
-    if (user) {
-      return true;
+    if (token !== null) {
+      const decode = jwt.decode(token, TOKEN_KEY);
+      const user = userDAO.findUserByEmail(decode.email);
+      if (user) {
+        return true;
+      } else {
+        throw new Error();
+      }
     } else {
-      throw new Error();
+      //pas de token
+      res.sendStatus(401);
     }
   },
 
