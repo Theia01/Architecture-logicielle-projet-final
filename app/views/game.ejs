@@ -22,27 +22,37 @@
             </div>
             <div class="form-group">
               <span style="color : #dc3545;" class="form-text"><%=locals.message %></span>
-          </div>
+            </div>
           </div>
           <div class="row justify-content-center">
             <div class="col-sm-7">
               <p class="form-text mt-5">Vous pouvez rajouter des options :</p>
               <div class="form-group">
                 <label for="selectTheme">Thème</label>
-                <select class="form-control" id="selectTheme">
-                  <option selected>Choisir un thème</option>
-                    <% for(var i=0; i < theme.length; i++) { %>
+                <select name="theme" class="form-control" id="selectTheme">
+                  <option value="<%= theme[0] %>" selected><%= theme[0] %></option>
+                    <% for(var i=1; i < theme.length; i++) { %>
                     <option style="text-transform: capitalize;" value="<%= theme[i] %>"><%= theme[i] %></option>
                     <% } %>
                 </select>
               </div>
               <div class="form-group">
                 <label for="selectTheme">Difficulté</label>
-                <select class="form-control" id="selectTheme">
-                  <option selected>Choisir une difficulté</option>
+                <select name="difficulty" class="form-control" id="selectTheme">
+                  <option value="" selected>Choisir une difficulté</option>
                     <% for(var i=0; i < difficulty.length; i++) { %>
                     <option style="text-transform: capitalize;" value="<%= difficulty[i] %>"><%= difficulty[i] %></option>
                     <% } %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="selectTheme">Nombre de questions</label>
+                <select name="number" class="form-control" id="selectTheme">
+                    <option value="5">5</option>
+                    <option selected value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
                 </select>
               </div>
             </div>

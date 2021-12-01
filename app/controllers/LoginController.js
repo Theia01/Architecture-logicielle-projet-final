@@ -6,6 +6,10 @@ module.exports = {
         res.render('login.ejs');
     },
 
+    loginFormError : (req, res) => {
+        res.render('login.ejs', {message : "Votre session a expiré. Veuillez vous reconnecter."});
+    },
+
     login : async (req, res) => {
         let user = await loginService.login(req.body.email , req.body.password);
         if(user.error){

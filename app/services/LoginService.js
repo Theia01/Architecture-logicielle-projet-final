@@ -12,7 +12,7 @@ module.exports = {
         try {
             response = await axios.get(MICROSERVICE_USER+"/login", {data : {'email' : email, 'password' : password}});
         }catch(e){
-            if(e.response.status){
+            if(e.hasOwnProperty('response')){
                 if(e.response.status == 401){
                     return {"error" : "Mauvais identifiant ou mot de passe"};
                 }
@@ -32,7 +32,7 @@ module.exports = {
         try {
             response = await axios.get(MICROSERVICE_USER+"/register", {data : {'pseudo' : user.pseudo, 'email' : user.email, 'password' : user.password}});
         }catch(e){
-            if(e.response.status){
+            if(e.hasOwnProperty('response')){
                 if(e.response.status == 400){
                     return {"error" : "Un champ est erroné"};
                 }else if(e.response.status == 409){

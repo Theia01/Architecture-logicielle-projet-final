@@ -3,10 +3,12 @@ const bodyParser = require('body-parser')
 const loginController = require('./controllers/LoginController');
 const gameController = require('./controllers/GameController');
 const logoutController = require('./controllers/LogoutController');
+const dashboardController = require('./controllers/DashboardController');
 const app = express();
 const port = 3000;
 global.MICROSERVICE_USER = 'http://localhost:3001';
-global.TOKEN_KEY = "vz5g405rnt4he-reh14h25te1grj56rzy4qhrde5tj56";
+global.MICROSERVICE_GAME = 'http://localhost:3002';
+global.MICROSERVICE_STAT = 'http://localhost:3003';
 
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -23,6 +25,11 @@ app.get('/', (req, res) => {
 // FORMULAIRE DE LOGIN
 app.get('/login', (req, res) => {
     loginController.loginForm(req, res);
+});
+
+// FORMULAIRE DE LOGIN
+app.get('/login-again', (req, res) => {
+    loginController.loginFormError(req, res);
 });
 
 // LOGIN
@@ -48,6 +55,11 @@ app.get('/game', (req, res) => {
 // FORMULAIRE POUR RECUPERER QUESTIONS
 app.post('/game', (req, res) => {
     gameController.getQuestions(req, res);
+});
+
+// SCORE
+app.get('/dashboard', (req, res) => {
+    dashboardController.show(req, res);
 });
 
 // FORMULAIRE POUR RECUPERER QUESTIONS
