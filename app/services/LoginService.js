@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { response } = require('express');
 
 module.exports = {
 
@@ -43,6 +44,17 @@ module.exports = {
         }
         console.log(response.data);
         return response.data;
+    },
+
+    checkToken : async (token) =>{
+        let response;
+        try {
+            response = await axios.get(MICROSERVICE_USER+"/validate", {data : {'token' : token}});
+        }catch(e){
+            return false;
+        }
+        console.log(typeof response);
+        return response;
     }
 
 

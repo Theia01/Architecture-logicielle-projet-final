@@ -2,9 +2,8 @@ const axios = require('axios');
 
 module.exports = {
     questions : async (token, theme, difficulty, number) => {
-
-        let response;
         // //APPEL MICROSERVICE
+        let response;
         try {
             response = await axios.get(MICROSERVICE_GAME+"/questions", {data : {'token' : token, 'theme' : theme, 'difficulty': difficulty, 'number' : number}});
         }catch(e){
@@ -15,7 +14,16 @@ module.exports = {
             }
             return {"error" : "Une erreur inattendu est survenu, veuillez réessayer plus tard"};
         }
-        console.log(response.data);
+        return response.data;
+    },
+
+    getCategories : async() =>{
+        let response;
+        try {
+            response = await axios.get(MICROSERVICE_GAME+"/categories");
+        }catch(e){
+            return {"error" : "Une erreur inattendu est survenu, veuillez réessayer plus tard"};
+        }
         return response.data;
     }
 }

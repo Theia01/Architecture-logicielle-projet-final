@@ -1,18 +1,27 @@
 const gameService = require('../services/GameService');
+const loginService = require('../services/LoginService');
 
 module.exports = {
 
     show : async (req, res) => {
-        //verifier si log
+        //verifier token
         var token = req.cookies.token;
-
-        //get themes
-        let themes = [25, 'Animals', 'Celebrities', 'Sports', 'Vehicules', 'Geography'];
+        let checkToken = await loginService.checkToken(token);
+        if(checkToken){
         
-        //get difficulties
-        let difficulties = ['easy', 'medium', 'hard'];
+            //get themes
+            let themes = await gameService.getCategories();
+            if(themes.error){
+                themes = "";
+            }
+            
+            //get difficulties
+            let difficulties = ['easy', 'medium', 'hard'];
 
-        res.render('game.ejs', {theme: themes, difficulty : difficulties});
+            res.render('game.ejs', {theme: themes, difficulty : difficulties});
+        }else{
+            res.redirect("login-again");
+        }
     },
 
     getQuestions : async (req, res) => {
@@ -22,9 +31,17 @@ module.exports = {
         let questions = await gameService.questions(token, req.body.theme, req.body.difficulty, req.body.number);
         if(questions.error){
             if(questions.error = "login-again"){
+                //sesion expire
                 res.redirect("login-again");
+            }else{
+                let difficulties = ['easy', 'medium', 'hard'];
+                //get themes
+                let themes = await gameService.getCategories();
+                if(themes.error){
+                    themes = "";
+                }
+                res.render('game.ejs', {theme: themes, difficulty : difficulties, message: questions.error});
             }
-            res.render('game.ejs', {message: questions.error});
         }else{
             res.render('quiz.ejs', {quest : questions});
         }
