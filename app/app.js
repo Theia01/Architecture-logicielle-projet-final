@@ -6,8 +6,8 @@ const logoutController = require('./controllers/LogoutController');
 const dashboardController = require('./controllers/DashboardController');
 const app = express();
 const port = 3000;
-global.MICROSERVICE_USER = 'http://localhost:3001';
-global.MICROSERVICE_GAME = 'http://localhost:3002';
+global.MICROSERVICE_USER = 'http://localhost:3002';
+global.MICROSERVICE_GAME = 'http://localhost:3004';
 global.MICROSERVICE_STAT = 'http://localhost:3003';
 
 var cookieParser = require('cookie-parser');
@@ -60,6 +60,11 @@ app.post('/game', (req, res) => {
 // SCORE
 app.get('/dashboard', (req, res) => {
     dashboardController.show(req, res);
+});
+
+// SCORE
+app.post('/dashboard', (req, res) => {
+    dashboardController.addStat(req, res);
 });
 
 // FORMULAIRE POUR RECUPERER QUESTIONS
