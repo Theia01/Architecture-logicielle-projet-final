@@ -50,6 +50,8 @@ module.exports = {
 
   create: (obj, id) => {
     obj.gameId = "" + new Date().getUTCMilliseconds();
+    let date = new Date();
+    obj.creationDate = "" + date.getTime();
     FAKE_DB.games.push(obj);
     //Ajout de l'obj dans la liste des games
 

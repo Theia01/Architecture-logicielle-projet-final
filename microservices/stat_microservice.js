@@ -39,7 +39,8 @@ app.post("/games", async (req, res) => {
   const validation = await validate(req.body.token);
   if (typeof validation !== "number") {
     try {
-      statService.createGame(req, res, validation.data.id);
+      console.log("TOKENT : ", req.body.game[0].name);
+      res.send(statService.createGame(res, req, validation.data.id));
     } catch (err) {
       console.error(err);
     }

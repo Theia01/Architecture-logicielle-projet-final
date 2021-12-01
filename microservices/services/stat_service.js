@@ -11,7 +11,7 @@ module.exports = {
   },
 
   createGame: (res, req, id) => {
-    const obj = req.body.game;
+    const obj = req.body.game[0];
     // const isQuestionValid =
     //   typeof obj["question"] === "string" &&
     //   data["question"].length > 5 &&
@@ -27,7 +27,8 @@ module.exports = {
     //   data["difficulty"] <= 3;
 
     const isScoreValid =
-      typeof obj.score === "number" && obj.score <= obj.numberOfQuestions;
+      typeof obj.finalScore === "number" &&
+      obj.finalScore <= obj.numberOfQuestions;
     const isNumberOfQuestionValid = typeof obj.numberOfQuestions === "number";
     if (isScoreValid && isNumberOfQuestionValid) {
       return statDAO.create(obj, id);
