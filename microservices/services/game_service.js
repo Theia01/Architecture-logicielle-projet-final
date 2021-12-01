@@ -5,11 +5,11 @@ module.exports = {
     return gameDAO.list();
   },
 
-  listWithParameters: (req, res) => {
+  listWithParameters: async (req, res) => {
     const theme = req.body.theme;
     const difficulty = req.body.difficulty;
     const nbQuestion = req.body.number;
-    return gameDAO.listWithParameters(theme, difficulty, nbQuestion);
+    return await gameDAO.getQuestions(theme, difficulty, nbQuestion);
   },
 
   create: (obj) => {

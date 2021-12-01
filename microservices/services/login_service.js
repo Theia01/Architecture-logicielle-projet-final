@@ -24,9 +24,10 @@ module.exports = {
     }
   },
 
-  validate: (token) => {
+  validate: (req, res) => {
+    let token = req.body.token;
     const decode = jwt.decode(token, TOKEN_KEY);
-    const user = userDAO.findUserByEmail(user.email);
+    const user = userDAO.findUserByEmail(decode.email);
     if (user) {
       return true;
     } else {
@@ -37,14 +38,14 @@ module.exports = {
   register: (user) => {
     if (!user.email || !user.password || !user.pseudo) {
       console.log("Microservice LOGIN : All inputs are required");
-      return {error : 400};
+      return { error: 400 };
     }
 
     //verifie si l'utilisateur n'existe pas déjà en BDD
     let checkUser = userDAO.findUserByEmail(user.email);
     if (checkUser) {
       console.log("Microservice LOGIN : User already exist");
-      return {error : 409};
+      return { error: 409 };
     } else {
       user.registered = new Date().toISOString();
       user.isActive = true;

@@ -12,10 +12,14 @@ const port = 3002;
 const loginMicroservice = "http://localhost:3001";
 
 app.get("/questions", async (req, res) => {
-  if (validate(res.body.token)) {
+  if (validate(req.body.token)) {
     try {
       if (req.body !== "") {
-        res.json(gameService.listWithParameters(req, res));
+        console.log(
+          "RESULT : ",
+          await gameService.listWithParameters(req, res)
+        );
+        res.json(await gameService.listWithParameters(req, res));
       } else {
         res.json(gameService.list());
       }
@@ -45,9 +49,12 @@ app.listen(port, () => {
 async function validate(token) {
   let response;
   try {
-    response = await axios.post(loginMicroservice + "/validate", {
-      token: token,
+    response = await axios.get(loginMicroservice + "/validate", {
+      data: {
+        token: token,
+      },
     });
+    console.log(response);
   } catch (e) {
     if (e.response.status == 403) {
       res.sendStatus(403);

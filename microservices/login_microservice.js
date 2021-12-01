@@ -22,9 +22,9 @@ app.get("/register", async (req, res) => {
   try {
     //create user
     let newUser = await loginService.register(req.body);
-    if(newUser){
+    if (newUser) {
       res.sendStatus(newUser.error);
-    }else{
+    } else {
       //connect user
       let token = loginService.login(req.body.email, req.body.password);
       res.json(token);

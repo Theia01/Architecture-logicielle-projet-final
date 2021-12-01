@@ -44,7 +44,7 @@ app.get("/games", async (req, res) => {
 //   }
 // });
 
-app.post("/game", async (req, res) => {
+app.post("/games", async (req, res) => {
   // Récuperer les headers
 
   if (statService.create) {
