@@ -3,26 +3,38 @@ const FAKE_DB = require("../../fake_stat_db");
 
 module.exports = {
   userStats: (userId) => {
-    let stats = FAKE_DB.stats.filter(userId === stats.userId);
-    let totalOfQuestions;
-    let totalOfScore;
-
-    //calcule le % de bonnes réponses par rapport au total des questions
-    stats.gamesId.forEach((element) => {
-      const game = this.getGameFromId(element);
-      totalOfQuestions += game.numberOfQuestions;
-      totalOfScore += game.finalScore;
+    let userStats = FAKE_DB.stats.find((stats) => {
+      return userId == stats.userId;
     });
-
-    return (totalOfScore / totalOfQuestions) * 100;
+    let totalOfQuestions = 0;
+    let totalOfScore = 0;
+    let total = 0;
+    //calcule le % de bonnes réponses par rapport au total des questions
+    if (userStats.gamesId.length) {
+      userStats.gamesId.forEach((element) => {
+        const game = FAKE_DB.games.find((games) => {
+          return element === games.gameId;
+        });
+        totalOfQuestions += game.numberOfQuestions;
+        totalOfScore += game.finalScore;
+      });
+      total = (totalOfScore / totalOfQuestions) * 100;
+    }
+    return total;
   },
 
   userGames: (userId) => {
-    let stats = FAKE_DB.stats.filter(userId === stats.userId);
+    let userStats = FAKE_DB.stats.find((stats) => {
+      return userId == stats.userId;
+    });
     let games = [];
     //récupère toutes les partiesqu'un utilisateur a faites
-    stats.gamesId.forEach((element) => {
-      games.push(this.getGameFromId(element));
+    userStats.gamesId.forEach((element) => {
+      games.push(
+        FAKE_DB.games.find((games) => {
+          return element === games.gameId;
+        })
+      );
     });
     return games;
   },
@@ -32,10 +44,6 @@ module.exports = {
     FAKE_DB.games.push(obj);
     let statsUser = FAKE_DB.stats.find(userId === stats.userId);
     statsUser.gamesId.push(obj.id);
-  },
-
-  getGameFromId: (gameId) => {
-    return FAKE_DB.games.find(gameId === games.gameId);
   },
 
   create: (obj) => {

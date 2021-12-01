@@ -32,7 +32,7 @@ module.exports = {
       if (decode) {
         const user = userDAO.findUserByEmail(decode.email);
         if (user) {
-          return res.send(true);
+          return res.send(user);
         } else {
           res.sendStatus(401);
         }

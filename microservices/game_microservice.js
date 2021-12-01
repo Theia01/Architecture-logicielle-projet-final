@@ -7,13 +7,12 @@ const crypto = require("crypto");
 const gameService = require("./services/game_service");
 const app = express();
 app.use(bodyparser.json());
-const port = 3002;
+const port = 3004;
 
-const loginMicroservice = "http://localhost:3001";
+const loginMicroservice = "http://localhost:3002";
 
 app.get("/questions", async (req, res) => {
   let validation = await validate(req.body.token);
-  console.log(validation);
   if (typeof validation !== "number") {
     try {
       if (req.body !== "") {

@@ -6,8 +6,8 @@ module.exports = {
     return statDAO.userStats(id);
   },
 
-  userGames: (req, res) => {
-    return statDAO.userGames(req.userId);
+  userGames: (id, res) => {
+    return statDAO.userGames(id);
   },
 
   createGame: (obj) => {

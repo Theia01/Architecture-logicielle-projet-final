@@ -7,7 +7,7 @@ const crypto = require("crypto");
 const loginService = require("./services/login_service");
 const app = express();
 app.use(bodyparser.json());
-const port = 3001;
+const port = 3002;
 
 app.get("/login", async (req, res) => {
   try {

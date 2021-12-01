@@ -9,24 +9,23 @@ const app = express();
 app.use(bodyparser.json());
 const port = 3003;
 
+const loginMicroservice = "http://localhost:3002";
+
 app.get("/stat", async (req, res) => {
-  let validation = await validate(req.body.token);
+  const validation = await validate(req.body.token);
   if (typeof validation !== "number") {
-    try {
-      const id = await getId(req.body.token);
-      res.json(statService.userStats(id, res));
-    } catch (err) {
-      console.error(err);
-    }
+    console.log(validation.data.id);
+    res.json(statService.userStats(validation.data.id, res));
   } else {
     res.sendStatus(401); //unauthorized
   }
 });
 
 app.get("/games", async (req, res) => {
-  if (validate(req.body.token)) {
+  const validation = await validate(req.body.token);
+  if (typeof validation !== "number") {
     try {
-      res.json(statService.userGames(req, res));
+      res.json(statService.userGames(validation.data.id, res));
     } catch (err) {
       console.error(err);
     }
@@ -34,15 +33,6 @@ app.get("/games", async (req, res) => {
     res.sendStatus(401); //unauthorized
   }
 });
-
-// app.get("/games", async (req, res) => {
-//   try {
-//     var pageUrl = url.parse(req.url, true).query;
-//     res.json(statService.list());
-//   } catch (err) {
-//     console.error(err);
-//   }
-// });
 
 app.post("/games", async (req, res) => {
   // Récuperer les headers
@@ -62,16 +52,17 @@ async function validate(token) {
         token: token,
       },
     });
-    console.log(response);
+    return response;
   } catch (e) {
-    if (e.response.status == 403) {
-      res.sendStatus(403);
-      console.log(403);
+    console.log(e);
+    if (e.response.status === 403) {
+      response = 403;
+    } else if (e.response.status === 401) {
+      response = 401;
     } else {
-      res.sendStatus(500);
-      console.log(500);
+      response = 500;
     }
-    console.log(response);
+    console.log("response of validate function : ", response);
     return response;
   }
 }
@@ -79,21 +70,19 @@ async function validate(token) {
 async function getId(token) {
   let response;
   try {
-    response = await axios.get(loginMicroservice + "/getId", {
+    response = await axios.get(loginMicroservice + "/userId", {
       data: {
         token: token,
       },
     });
-    console.log(response);
   } catch (e) {
-    if (e.response.status == 403) {
-      res.sendStatus(403);
-      console.log(403);
+    if (e.response.status === 403) {
+      response = 403;
+    } else if (e.response.status === 401) {
+      response = 401;
     } else {
-      res.sendStatus(500);
-      console.log(500);
+      response = 500;
     }
-    console.log(response);
     return response;
   }
 }
