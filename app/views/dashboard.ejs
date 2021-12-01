@@ -23,7 +23,7 @@
       </div>
       <% if(games != "") { %>
         <div class="row mt-3">
-          <% for(var i=1; i < games.length; i++) { %>
+          <% for(var i=0; i < games.length; i++) { %>
           <div class="col-sm-3 ">
             <p><b><%= games[i].name %></b>
             <br>Score : <%= games[i].finalScore %>/<%= games[i].numberOfQuestions %>
