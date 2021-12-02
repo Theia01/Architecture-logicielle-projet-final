@@ -1,5 +1,4 @@
 # Architecture-logicielle-projet-final
-Cours d'architecture logicielle durant notre master chez Ynov 
 
 ## Introduction
 
@@ -75,3 +74,6 @@ Une fois l'application lancé, vous n'avez plus qu'a vous rendre sur : [http://l
 
 &nbsp;
 
+## Plan du site
+
+![Sitemap](sitemap.jpg)
