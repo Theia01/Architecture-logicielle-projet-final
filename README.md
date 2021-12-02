@@ -76,4 +76,4 @@ Une fois l'application lancé, vous n'avez plus qu'a vous rendre sur : [http://l
 
 ## Plan du site
 
-![Sitemap](sitemap.jpg)
+![Sitemap](sitemap.svg)
